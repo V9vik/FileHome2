@@ -1,15 +1,39 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import java.util.ArrayList;
+import java.util.List;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+public class Main {
+
+    public static void main(String[] args) {
+        GameProgress game1 = new GameProgress(100, 3, 1, 10.5);
+        GameProgress game2 = new GameProgress(80, 2, 2, 20.0);
+        GameProgress game3 = new GameProgress(50, 1, 3, 30.0);
+
+        String saveDir = "/Users/vovamyzikov/Games/savegames";
+        List<String> savedFiles = new ArrayList<>();
+
+        saveGame(saveDir + "save1.dat", game1);
+        saveGame(saveDir + "save2.dat", game2);
+        saveGame(saveDir + "save3.dat", game3);
+
+        savedFiles.add(saveDir + "save1.dat");
+        savedFiles.add(saveDir + "save2.dat");
+        savedFiles.add(saveDir + "save3.dat");
+
+        String zipPath = saveDir + "games.zip";
+        zipFiles(zipPath, savedFiles);
+
+        deleteFiles(savedFiles);
+    }
+
+    private static void saveGame(String path, GameProgress gameProgress) {
+        GameSaver.saveGame(path, gameProgress);
+    }
+
+    private static void zipFiles(String zipPath, List<String> filesToZip) {
+        ZipFIles.zipFiles(zipPath, filesToZip);
+    }
+
+    private static void deleteFiles(List<String> filesToDelete) {
+        FileDeleter.deleteFiles(filesToDelete);
     }
 }
